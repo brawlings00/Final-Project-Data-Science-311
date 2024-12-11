@@ -1,6 +1,6 @@
 # Final-Project-Data-Science-311
 
-Overview
+**Overview**
 
 This classification assignment aims to test the performance of KNN, Gaussian Naive Bayes, and Decision Tree models in predicting what MLB team will make the playoffs.
 
