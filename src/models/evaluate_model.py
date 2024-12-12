@@ -65,4 +65,10 @@ if __name__ == "__main__":
 
     # Evaluate the model
     metrics, y_pred = evaluate_classification_model(model, X_test, y_test)
-    print("
+    print("Evaluation Metrics:")
+    for metric, value in metrics.items():
+        print(f"{metric}: {value:.4f}")
+
+    # Plot the confusion matrix
+    class_names = ["No Playoffs", "Playoffs"]
+    plot_confusion_matrix(y_test, y_pred, class_names)
