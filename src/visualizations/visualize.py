@@ -31,4 +31,46 @@ def plot_correlation_matrix(data):
     plt.title("Correlation Matrix")
     plt.show()
 
-def plot_feature
+def plot_feature_importances(model, feature_names):
+    """
+    Plot the feature importances of a trained model.
+    Args:
+        model: Trained model with feature_importances_ attribute.
+        feature_names (list): List of feature names.
+    """
+    importances = model.feature_importances_
+    sorted_indices = importances.argsort()
+    
+    plt.figure(figsize=(10, 6))
+    plt.barh(range(len(importances)), importances[sorted_indices], align="center")
+    plt.yticks(range(len(importances)), [feature_names[i] for i in sorted_indices])
+    plt.xlabel("Feature Importance")
+    plt.title("Feature Importances")
+    plt.show()
+
+if __name__ == "__main__":
+    from load_data import load_data
+    from process import preprocess_data, split_data
+    from train_model import train_model
+
+    # Load the dataset
+    file_path = "baseball.csv"
+    target_column = "Playoffs"
+    data = load_data(file_path)
+
+    # Identify numeric columns
+    numeric_columns = data.select_dtypes(include=["float64", "int64"]).columns.tolist()
+
+    # Plot feature distributions
+    plot_feature_distributions(data, numeric_columns, target_column)
+
+    # Plot correlation matrix
+    plot_correlation_matrix(data)
+
+    # Train model for feature importance
+    X, y = preprocess_data(data, target_column)
+    X_train, X_test, y_train, y_test = split_data(X, y)
+    model = train_model(X_train, y_train)
+
+    # Plot feature importances
+    plot_feature_importances(model, X.columns.tolist())
